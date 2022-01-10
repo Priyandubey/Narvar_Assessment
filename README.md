@@ -17,5 +17,9 @@ We may have to shorten hundreds of millions of URLs lets say a billion of url. S
 Lets say this <hash_value> is always of fixed length i.e 5. We can randomly generate this <hash_value> and store it in the form of <ID,URL> in a list. Where ID will be the randomly generated <hash_value>. So when the user input the URL we generate the <hash_value> as the ID and store it in the list. While when we are typing the shorten_url in our browser we can search for the <hash_value> in the list and redirect to the URL.
 
 A problem in the approach is we might generate same <hash_value> for different URL.
-To overcome this hurdle we 
+To overcome this hurdle we may store it in the database in the following way:-
+
+```
+lknefl
+```
 
