@@ -20,6 +20,26 @@ A problem in the approach is we might generate same <hash_value> for different U
 To overcome this hurdle we may store it in the database in the following way:-
 
 ```
-lknefl
+Table Short_Url(ID : int PRIMARY_KEY AUTO_INC,Original_url : varchar,Short_url : varchar)
+```
+In this the ID will always be unique unique. We can use this ID to generate a <hash_value> which is always unique.
+One such straight forward approach to generate unique <hash_value> from the ID is this:-
+```
+(Java Code)
+
+static String idToShortURL(long n){
+  // Map to store 62 characters
+  String varValue = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  char map[] = varValue.toCharArray();
+
+  StringBuilder shorturl = new StringBuilder();
+  // Convert given integer id to a base 62 number
+  while (n != 0){
+      shorturl.append(map[(int) (n%62)]);
+      n = n/62;
+  }
+  // Reverse shortURL to complete base conversion
+  return shorturl.toString();
+}
 ```
 
