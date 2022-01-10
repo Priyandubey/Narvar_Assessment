@@ -22,11 +22,10 @@ To overcome this hurdle we may store it in the database in the following way:-
 ```
 Table Short_Url(ID : int PRIMARY_KEY AUTO_INC,Original_url : varchar,Short_url : varchar)
 ```
-In this the ID will always be unique unique. We can use this ID to generate a <hash_value> which is always unique.
-One such straight forward approach to generate unique <hash_value> from the ID is this:-
-```
+In this the ID will always be unique unique. We can use this ID to generate a Short_url which is always unique.
+One such straight forward approach to generate unique Short_url from the ID is this:-
 (Java Code)
-
+```
 static String idToShortURL(long n){
   // Map to store 62 characters
   String varValue = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -42,4 +41,32 @@ static String idToShortURL(long n){
   return shorturl.toString();
 }
 ```
+
+To convert Short_url to id:-
+(Java Code)
+```
+static long shortURLtoID(String shortURL){
+    long id = 0;
+    int ind = shortURL.length();
+    char[] map = new char[ind];
+    for(char c : shortURL.toCharArray()) map[--ind] = c;
+  
+    // A simple base conversion logic
+    for (;ind < map.length; ind++){
+        if ('a' <= map[ind] && map[ind] <= 'z')
+          id = id*62 + map[ind] - 'a';
+        if ('A' <= map[ind] && map[ind] <= 'Z')
+          id = id*62 + map[ind] - 'A' + 26;
+        if ('0' <= map[ind] && map[ind] <= '9')
+          id = id*62 + map[ind] - '0' + 52;
+    }
+    return id;
+}
+
+```
+
+The data stored might be massive, so for that we will be using mutiple machines. To get the right machine consistent hashing can be used. We will use some hash function to hash the url to the machine number.
+
+
+We might also make use of caching. Because most of the traffic might be the popular url. There we can use key value datastore like Redis. To fetch the shorten url before hitting the datbase. 
 
